@@ -17,3 +17,14 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
+
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    subscriptionId: '18d635e6-beae-482d-bbe1-e1d1f008bdca'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'test-resource-group'
+    location: 'North Europe'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'virtual_network.json'
+    deploymentMode: 'Incremental'
