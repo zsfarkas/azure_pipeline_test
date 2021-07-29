@@ -1,0 +1,99 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "sku": {
+            "type": "string"
+        },
+        "zones": {
+            "type": "array"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2019-09-01",
+            "type": "Microsoft.Network/natGateways",
+            "name": "[parameters('name')]",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "sku": {
+                "name": "[parameters('sku')]"
+            },
+            "zones": "[parameters('zones')]",
+            "properties": {
+                "publicIPAddresses": [
+                    {
+                        "id": "[resourceId('Microsoft.Network/publicIpAddresses/', 'test-outbound-ip-address')]"
+                    }
+                ],
+                "publicIPPrefixes": [],
+                "idleTimeoutInMinutes": 4
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIpAddresses/', 'test-outbound-ip-address')]"
+            ]
+        },
+        {
+            "apiVersion": "2020-08-01",
+            "type": "Microsoft.Network/publicIpAddresses",
+            "name": "test-outbound-ip-address",
+            "location": "northeurope",
+            "sku": {
+                "name": "Standard"
+            },
+            "properties": {
+                "publicIPAllocationMethod": "Static"
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "type": "Microsoft.Resources/deployments",
+            "name": "VirtualNetworkAssociation-20210729085137",
+            "dependsOn": [
+                "[concat('Microsoft.Network/natGateways/', parameters('name'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "name": "test-virtual-network",
+                            "id": "/subscriptions/18d635e6-beae-482d-bbe1-e1d1f008bdca/resourceGroups/test-resource-group/providers/Microsoft.Network/virtualNetworks/test-virtual-network",
+                            "location": "northeurope",
+                            "type": "Microsoft.Network/virtualNetworks",
+                            "properties": {
+                                "subnets": [
+                                    {
+                                        "name": "default",
+                                        "id": "/subscriptions/18d635e6-beae-482d-bbe1-e1d1f008bdca/resourceGroups/test-resource-group/providers/Microsoft.Network/virtualNetworks/test-virtual-network/subnets/default",
+                                        "properties": {
+                                            "addressPrefix": "10.0.0.0/24",
+                                            "natGateway": {
+                                                "id": "[resourceId('Microsoft.Network/natGateways/', parameters('name'))]"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "addressSpace": {
+                                    "addressPrefixes": [
+                                        "10.0.0.0/16"
+                                    ]
+                                }
+                            },
+                            "tags": {},
+                            "apiVersion": "2021-01-01"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
