@@ -6,7 +6,7 @@
             "value": "resource-group"
         },
         "rgLocation": {
-            "value": "nordeurope"
+            "value": "northeurope"
         },
         "tags": {
             "value": {}
