@@ -23,6 +23,6 @@ steps:
     subscriptionId: '18d635e6-beae-482d-bbe1-e1d1f008bdca'
     location: 'North Europe'
     templateLocation: 'Linked artifact'
-    csmFile: 'resource-group.template.json'
-    csmParametersFile: 'resource-group.parameters.json'
+    csmFile: '$(Build.ArtifactStagingDirectory)/resource-group.template.json'
+    csmParametersFile: '$(Build.ArtifactStagingDirectory)/resource-group.parameters.json'
     deploymentMode: 'Incremental'
