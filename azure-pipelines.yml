@@ -10,21 +10,13 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
-    deploymentScope: 'Resource Group'
+    deploymentScope: 'Subscription'
+    azureResourceManagerConnection: 'Free Trial(18d635e6-beae-482d-bbe1-e1d1f008bdca)'
     subscriptionId: '18d635e6-beae-482d-bbe1-e1d1f008bdca'
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: 'test-resource-group'
     location: 'North Europe'
     templateLocation: 'URL of the file'
-    csmFileLink: 'virtual_network.json'
+    csmFileLink: '$(Build.SourcesDirectory)/pipeline/resource_templates/resource_group.template.json'
+    csmParametersFileLink: '$(Build.SourcesDirectory)/pipeline/resource_templates/resource_group.parameters.json'
     deploymentMode: 'Incremental'
