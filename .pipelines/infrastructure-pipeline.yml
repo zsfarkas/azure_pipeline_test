@@ -10,13 +10,18 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '.pipelines/azure-templates/'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Subscription'
     azureResourceManagerConnection: 'Free Trial(18d635e6-beae-482d-bbe1-e1d1f008bdca)'
     subscriptionId: '18d635e6-beae-482d-bbe1-e1d1f008bdca'
     location: 'North Europe'
-    templateLocation: 'URL of the file'
-    csmFileLink: '$(Build.SourcesDirectory)/.pipelines/azure-templates/resource_group.template.json'
-    csmParametersFileLink: '$(Build.SourcesDirectory)/.pipelines/azure-templates/resource_group.parameters.json'
+    templateLocation: 'Linked artefact'
+    csmFileLink: '$(Build.SourcesDirectory)/resource_group.template.json'
+    csmParametersFileLink: '$(Build.SourcesDirectory)/resource_group.parameters.json'
     deploymentMode: 'Incremental'
