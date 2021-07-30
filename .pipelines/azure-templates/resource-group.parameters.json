@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "rgName": {
-            "value": "resource-group-2"
+            "value": "resource-group"
         },
         "rgLocation": {
-            "value": "northeurope"
+            "value": "westeurope"
         },
         "tags": {
             "value": {}
