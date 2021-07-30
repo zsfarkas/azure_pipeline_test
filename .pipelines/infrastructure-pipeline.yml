@@ -17,6 +17,6 @@ steps:
     subscriptionId: '18d635e6-beae-482d-bbe1-e1d1f008bdca'
     location: 'North Europe'
     templateLocation: 'URL of the file'
-    csmFileLink: '$(Build.SourcesDirectory)/pipeline/resource_templates/resource_group.template.json'
-    csmParametersFileLink: '$(Build.SourcesDirectory)/pipeline/resource_templates/resource_group.parameters.json'
+    csmFileLink: '$(Build.SourcesDirectory)/.pipelines/azure-templates/resource_group.template.json'
+    csmParametersFileLink: '$(Build.SourcesDirectory)/.pipelines/azure-templates/resource_group.parameters.json'
     deploymentMode: 'Incremental'
