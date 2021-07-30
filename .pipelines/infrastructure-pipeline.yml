@@ -22,7 +22,7 @@ steps:
     azureResourceManagerConnection: 'Free Trial(18d635e6-beae-482d-bbe1-e1d1f008bdca)'
     subscriptionId: '18d635e6-beae-482d-bbe1-e1d1f008bdca'
     location: 'North Europe'
-    templateLocation: 'Linked artefact'
+    templateLocation: 'Linked artifact'
     csmFileLink: '$(Build.SourcesDirectory)/resource_group.template.json'
     csmParametersFileLink: '$(Build.SourcesDirectory)/resource_group.parameters.json'
     deploymentMode: 'Incremental'
